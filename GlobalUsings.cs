@@ -1,0 +1,1 @@
+global using aoc2024.Day1;
