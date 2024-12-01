@@ -59,6 +59,6 @@ public class Day1
             similarityScore += number*noOfOccurences;
         }
 
-        System.Console.WriteLine("Answer Day1 - part 1: {0}", similarityScore);
+        System.Console.WriteLine("Answer Day1 - part 2: {0}", similarityScore);
     }
 }
