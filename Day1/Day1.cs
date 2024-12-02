@@ -1,7 +1,7 @@
 using System.Numerics;
 
 namespace aoc2024.Day1;
-public class Day1
+public static class Day1
 {
     private static (List<int> left, List<int> right) ParseInput()
     {
@@ -38,11 +38,11 @@ public class Day1
         left.Sort();
         right.Sort();
 
-        BigInteger totalDistance = 0;  
+        BigInteger totalDistance = 0;
 
         for (int i = 0; i < left.Count; i++)
         {
-            totalDistance += Math.Abs(left[i]-right[i]);
+            totalDistance += Math.Abs(left[i] - right[i]);
         }
 
         System.Console.WriteLine("Answer Day1 - part 1: {0}", totalDistance);
@@ -56,7 +56,7 @@ public class Day1
         foreach (int number in left)
         {
             int noOfOccurences = right.FindAll(x => x.Equals(number)).Count;
-            similarityScore += number*noOfOccurences;
+            similarityScore += number * noOfOccurences;
         }
 
         System.Console.WriteLine("Answer Day1 - part 2: {0}", similarityScore);
