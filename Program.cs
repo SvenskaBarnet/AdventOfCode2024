@@ -1,4 +1,5 @@
 ﻿using aoc2024.Day2;
+using aoc2024.Day3;
 
 class Program
 {
@@ -8,5 +9,7 @@ class Program
         Day1.Part2();
         Day2.Part1();
         Day2.Part2();
+        Day3.Part1();
+        Day3.Part2();
     }
 }
