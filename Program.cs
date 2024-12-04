@@ -1,7 +1,4 @@
-﻿using aoc2024.Day2;
-using aoc2024.Day3;
-
-class Program
+﻿public static class Program
 {
     static void Main(string[] args)
     {
@@ -11,5 +8,7 @@ class Program
         Day2.Part2();
         Day3.Part1();
         Day3.Part2();
+        Day4.Part1();
+        Day4.Part2();
     }
 }
