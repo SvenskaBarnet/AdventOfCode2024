@@ -5,16 +5,18 @@ public class Day4
 {
     public static void Part1()
     {
-        const string word = "XMAS"; 
+        const string word = "XMAS";
         string[] wordSearch = ReadInput();
         int total = HorizontalMatches(wordSearch) + FindVerticalAndDiagonalMatches(wordSearch, word);
         System.Console.WriteLine("Answer Day4 - part 1: {0}", total);
     }
     public static void Part2()
     {
-
+        const string word = "MAS";
+        string[] wordSearch = ReadInput();
+        int total = FindMASes(wordSearch, word);
+        System.Console.WriteLine("Answer Day4 - part 2: {0}", total);
     }
-
 
     private static int HorizontalMatches(string[] wordSearch)
     {
@@ -26,7 +28,6 @@ public class Day4
         }
         return matches;
     }
-
     private static int FindVerticalAndDiagonalMatches(string[] wordSearch, string word)
     {
         int matches = 0;
@@ -42,9 +43,9 @@ public class Day4
                 int minY = minLettersToMatch - 1;
                 char letter = wordSearch[x][y];
 
-                if(letter == word.First())
+                if (letter == word.First())
                 {
-                    for(int direction = 0; direction <= (int)Directions.DownLeft; direction++)
+                    for (int direction = 0; direction <= (int)Directions.DownLeft; direction++)
                     {
                         bool match = false;
 
@@ -87,8 +88,8 @@ public class Day4
                                 }
                                 break;
                         }
-                        
-                        if(match)
+
+                        if (match)
                         {
                             matches++;
                         }
@@ -106,35 +107,35 @@ public class Day4
         int y = startY;
         for (int letterToMatch = 1; letterToMatch < word.Length; letterToMatch++)
         {
-            switch(direction)
+            switch (direction)
             {
-                case Directions.Up :
+                case Directions.Up:
                     x--;
                     break;
-                case Directions.Down :
+                case Directions.Down:
                     x++;
                     break;
-                case Directions.UpRight :
+                case Directions.UpRight:
                     x--;
                     y++;
                     break;
-                case Directions.DownRight :
+                case Directions.DownRight:
                     x++;
                     y++;
                     break;
-                case Directions.UpLeft :
+                case Directions.UpLeft:
                     x--;
                     y--;
                     break;
-                case Directions.DownLeft :
+                case Directions.DownLeft:
                     x++;
                     y--;
                     break;
             }
-            if(wordSearch[x][y] != word[letterToMatch])
-            { 
+            if (wordSearch[x][y] != word[letterToMatch])
+            {
                 return false;
-            } 
+            }
             else
             {
                 isMatch = true;
@@ -146,7 +147,97 @@ public class Day4
     private static string[] ReadInput()
     {
         return File.ReadAllLines(Path.Combine("Day4", "input"));
-    } 
+    }
+
+    private static int FindMASes(string[] wordSearch, string word)
+    {
+        int matches = 0;
+
+        for (int x = 0; x < wordSearch.Length; x++)
+        {
+            for (int y = 0; y < wordSearch[x].Length; y++)
+            {
+                int maxX = wordSearch.Length - 1;
+                int maxY = wordSearch[x].Length - 1;
+                int minX = 0;
+                int minY = 0;
+                char letter = wordSearch[x][y];
+                bool isWithinBounds = x > minX && x < maxX && y > minY && y < maxY;
+                bool letterIsA = letter == 'A';
+
+                if (letterIsA && isWithinBounds && IsMASMatch(x, y, wordSearch))
+                {
+                    matches++;
+                }
+            }
+        }
+        return matches;
+    }
+
+    private static bool IsMASMatch(int startX, int startY, string[] wordSearch)
+    {
+        bool isMatch = false;
+        char letterToCheck;
+        int indexToCheck = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            string letters = "MS";
+            switch (i)
+            {
+                case 0:
+                    letterToCheck = wordSearch[startX - 1][startY - 1];
+                    if (letters.Contains(letterToCheck))
+                    {
+                        if (letterToCheck == 'M')
+                        {
+                            indexToCheck = 1;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 1:
+                    letterToCheck = wordSearch[startX + 1][startY + 1];
+                    if (letters[indexToCheck] == letterToCheck)
+                    {
+                        indexToCheck = 0;
+                        break;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 2:
+                    letterToCheck = wordSearch[startX - 1][startY + 1];
+                    if (letters.Contains(letterToCheck))
+                    {
+                        if (letterToCheck == 'M')
+                        {
+                            indexToCheck = 1;
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 3:
+                    letterToCheck = wordSearch[startX + 1][startY - 1];
+                    if (letters[indexToCheck] == letterToCheck)
+                    {
+                        isMatch = true;
+                        break;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+            }
+        }
+        return isMatch;
+    }
 
     enum Directions
     {
@@ -157,5 +248,4 @@ public class Day4
         UpLeft,
         DownLeft
     }
-
 }
