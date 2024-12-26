@@ -28,22 +28,24 @@ public static class Day6
 
         do
         {
+            if(!visited.Any(l => l.SequenceEqual(currentLocation)))
+            {
+                visited.Add(currentLocation);
+            }
             if(NotTurning(GetNextLocation(currentLocation, currentDirection), map))
             {
                 if
                 (
                     !GetNextLocation(currentLocation, currentDirection).SequenceEqual(intitialCoordinates) &&
-                    !visited.Any(l => l.SequenceEqual(currentLocation)) &&
+                    !visited.Any(l => l.SequenceEqual(GetNextLocation(currentLocation, currentDirection))) &&
                     CanCreateLoop(map, currentLocation, currentDirection))
                 {
                     loops++;
                 }
-                visited.Add(currentLocation);
                 currentLocation = GetNextLocation(currentLocation, currentDirection);
             }
             else 
             {
-                visited.Add(currentLocation);
                 currentDirection = GetNewDirection(currentDirection);
             }
         } while (!IsFinished(GetNextLocation(currentLocation, currentDirection), map));
@@ -70,6 +72,11 @@ public static class Day6
 
         do
         {
+            if(visited.Contains(GenerateLocationId(currentLocation, currentDirection)))
+            {
+                return true;
+            }
+
             visited.Add(GenerateLocationId(currentLocation, currentDirection));
 
             if(NotTurning(GetNextLocation(currentLocation, currentDirection), map))
@@ -79,11 +86,6 @@ public static class Day6
             else 
             {
                 currentDirection = GetNewDirection(currentDirection);
-            }
-
-            if(visited.Contains(GenerateLocationId(currentLocation, currentDirection)))
-            {
-                return true;
             }
         } while (!IsFinished(GetNextLocation(currentLocation, currentDirection), map));
 
@@ -97,13 +99,8 @@ public static class Day6
 
     private static string[] AddObstacle(string[] map, int[] location, Direction direction)
     {
-        string[] tempMap = map;
+        string[] tempMap = (string[])map.Clone();
         int[] nextLocation = GetNextLocation(location, direction);
-
-        if(GetInitialCoordinates(map).SequenceEqual(nextLocation))
-        {
-            return map;
-        }
 
         int Y = nextLocation[0];
         int X = nextLocation[1];
