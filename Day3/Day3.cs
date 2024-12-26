@@ -5,20 +5,26 @@ public static class Day3
 {
     public static void Part1()
     {
+        Stopwatch sw = new();
+        sw.Start();
         List<string> instructions = ParseInstructions(parseOnlyMulitply: true);
         int total = instructions.Sum( instruction => {
             int[] numbers = ParseMultiplyinstruction(instruction);
             return numbers[0] * numbers[1];
         });
 
-        System.Console.WriteLine("Answer Day3 - part 1: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("\nAnswer Day3 - part 1: {0}. Time Taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
 
     public static void Part2()
     {
+        Stopwatch sw = new();
+        sw.Start();
         List<string> instructions = ParseInstructions(parseOnlyMulitply: false);
         int total = ProcessInstructionsWithSwitch(instructions);
-        System.Console.WriteLine("Answer Day3 - part 2: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("Answer Day3 - part 2: {0}. Time Taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
 
     private static int[] ParseMultiplyinstruction(string instruction)

@@ -34,6 +34,8 @@ public static class Day1
 
     public static void Part1()
     {
+        Stopwatch sw = new ();
+        sw.Start();
         (List<int> left, List<int> right) = ParseInput();
         left.Sort();
         right.Sort();
@@ -45,11 +47,14 @@ public static class Day1
             totalDistance += Math.Abs(left[i] - right[i]);
         }
 
-        System.Console.WriteLine("Answer Day1 - part 1: {0}", totalDistance);
+        sw.Stop();
+        System.Console.WriteLine("\nAnswer Day1 - part 1: {0}. Time Taken: {1}ms", totalDistance, sw.ElapsedMilliseconds);
     }
 
     public static void Part2()
     {
+        Stopwatch sw = new ();
+        sw.Start();
         (List<int> left, List<int> right) = ParseInput();
 
         int similarityScore = 0;
@@ -59,6 +64,7 @@ public static class Day1
             similarityScore += number * noOfOccurences;
         }
 
-        System.Console.WriteLine("Answer Day1 - part 2: {0}", similarityScore);
+        sw.Stop();
+        System.Console.WriteLine("Answer Day1 - part 2: {0}. Time Taken: {1}ms", similarityScore, sw.ElapsedMilliseconds);
     }
 }

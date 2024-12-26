@@ -1,6 +1,3 @@
-using System.Data;
-using System.Diagnostics;
-
 namespace aoc2024.Day6;
 
 public static class Day6

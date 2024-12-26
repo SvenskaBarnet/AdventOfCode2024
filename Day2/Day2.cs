@@ -5,6 +5,8 @@ public static class Day2
     private const int MIN_DIFFERENCE = 1;
     public static void Part1()
     {
+        Stopwatch sw = new();
+        sw.Start();
         string[] input = File.ReadAllLines(Path.Combine("Day2", "input"));
         int totalSafeReports = 0;
 
@@ -17,11 +19,14 @@ public static class Day2
                 totalSafeReports++;
             }
         }
-        System.Console.WriteLine("Answer Day2 - part 1: {0}", totalSafeReports);
+        sw.Stop();
+        System.Console.WriteLine("\nAnswer Day2 - part 1: {0}. Time Taken: {1}ms", totalSafeReports, sw.ElapsedMilliseconds);
     }
 
     public static void Part2()
     {
+        Stopwatch sw = new();
+        sw.Start();
         string[] input = File.ReadAllLines(Path.Combine("Day2", "input"));
         int totalSafeReports = 0;
 
@@ -49,7 +54,8 @@ public static class Day2
                 }
             }
         }
-        System.Console.WriteLine("Answer Day2 - part 2: {0}", totalSafeReports);
+        sw.Stop();
+        System.Console.WriteLine("Answer Day2 - part 2: {0}. Time Taken: {1} Microseconds", totalSafeReports, sw.Elapsed.TotalMicroseconds);
     }
     private static bool IsSafe(List<int> numbers)
     {

@@ -5,17 +5,23 @@ public class Day4
 {
     public static void Part1()
     {
+        Stopwatch sw = new();
+        sw.Start();
         const string word = "XMAS";
         string[] wordSearch = ReadInput();
         int total = HorizontalMatches(wordSearch) + FindVerticalAndDiagonalMatches(wordSearch, word);
-        System.Console.WriteLine("Answer Day4 - part 1: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("\nAnswer Day4 - part 1: {0}. Time Taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
     public static void Part2()
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         const string word = "MAS";
         string[] wordSearch = ReadInput();
         int total = FindMASes(wordSearch, word);
-        System.Console.WriteLine("Answer Day4 - part 2: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("Answer Day4 - part 2: {0}. Time Taken: {1} Microseconds", total, sw.Elapsed.TotalMicroseconds);
     }
 
     private static int HorizontalMatches(string[] wordSearch)

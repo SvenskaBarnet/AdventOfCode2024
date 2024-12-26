@@ -4,16 +4,21 @@ public class Day5
 {
     public static void Part1()
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         (List<int[]> rules, List<int[]> updates) = ParseInput();
         int total = ProcessUpdates(rules, updates, Part.Part1);
-        System.Console.WriteLine("Answer Day5 - part 1: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("\nAnswer Day5 - part 1: {0}. Time Taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
     public static void Part2()
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         (List<int[]> rules, List<int[]> updates) = ParseInput();
         int total = ProcessUpdates(rules, updates, Part.Part2);
-        System.Console.WriteLine("Answer Day5 - part 2: {0}", total);
-
+        sw.Stop();
+        System.Console.WriteLine("Answer Day5 - part 2: {0}. Time Taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
 
     private static (List<int[]> rules, List<int[]> updates) ParseInput()
