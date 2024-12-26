@@ -1,4 +1,5 @@
 using System.Data;
+using System.Diagnostics;
 
 namespace aoc2024.Day6;
 
@@ -6,16 +7,22 @@ public static class Day6
 {
     public static void Part1()
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         string[] input = ParseInput();
         int total =  GetXs(input);
-        System.Console.WriteLine("Answer Day6 - part 1: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("\nAnswer Day6 - part 1: {0}. Time taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
 
     public static void Part2()
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
         string[] input = ParseInput();
         int total = GetLoops(input);
-        System.Console.WriteLine("Answer Day6 - part 2: {0}", total);
+        sw.Stop();
+        System.Console.WriteLine("Answer Day6 - part 2: {0}. Time taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
 
     private static int GetLoops(string[] map)
