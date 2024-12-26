@@ -68,16 +68,18 @@ public static class Day6
     {
         Direction currentDirection = direction;
         int[] currentLocation = (int[])location.Clone();
-        List<int> visited = [];
+        var visited = new HashSet<(int Y, int X, Direction dir)>();
 
         do
         {
-            if(visited.Contains(GenerateLocationId(currentLocation, currentDirection)))
+            var locationHash = (currentLocation[0], currentLocation[1], currentDirection);
+
+            if(visited.Contains(locationHash))
             {
                 return true;
             }
 
-            visited.Add(GenerateLocationId(currentLocation, currentDirection));
+            visited.Add(locationHash);
 
             if(NotTurning(GetNextLocation(currentLocation, currentDirection), map))
             {
@@ -90,11 +92,6 @@ public static class Day6
         } while (!IsFinished(GetNextLocation(currentLocation, currentDirection), map));
 
         return false;
-    }
-
-    private static int GenerateLocationId(int[] location, Direction direction)
-    {
-        return int.Parse($"{(int)direction}{location[0]}{location[1]}");
     }
 
     private static string[] AddObstacle(string[] map, int[] location, Direction direction)
