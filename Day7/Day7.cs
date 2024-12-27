@@ -32,7 +32,7 @@ public static class Day7
 
         foreach (var kvp in input)
         {
-            if(IsEquationTrue(kvp, operatorsCount))
+            if (IsEquationTrue(kvp, operatorsCount))
             {
                 result += kvp.Value;
             }
@@ -45,8 +45,9 @@ public static class Day7
         int baseValue = operatorsCount;
         int digits = equation.Key.Length - 1;
         int totalCombinations = (int)Math.Pow(baseValue, digits);
+        bool found = false;
 
-        for (int i = 0; i < totalCombinations; i++)
+        Parallel.For(0, totalCombinations, (i, loopState) =>
         {
             int[] combination = new int[digits];
             int current = i;
@@ -60,11 +61,12 @@ public static class Day7
 
             if(CombinationIsTrue(equation, combination))
             {
-                return true;
+                found = true;
+                loopState.Stop();
             }
-        }
+        });
 
-        return false;
+        return found;
     }
 
     private static bool CombinationIsTrue(KeyValuePair<double[], double> equation, int[] combination)
