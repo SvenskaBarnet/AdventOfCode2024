@@ -5,3 +5,4 @@ global using aoc2024.Day3;
 global using aoc2024.Day4;
 global using aoc2024.Day5;
 global using aoc2024.Day6;
+global using aoc2024.Day7;
