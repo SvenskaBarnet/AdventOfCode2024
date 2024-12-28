@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -22,12 +23,13 @@ public static class Day8
         Stopwatch sw =  new();
         sw.Start();
 
-        int total = 0;
+        string[] input = File.ReadAllLines(Path.Combine("Day8", "input"));
+        int total = FindUniqueLocations(input, true);
         sw.Stop();
         System.Console.WriteLine("Answer Day8 - part 2: total: {0}. Time taken: {1}ms", total, sw.ElapsedMilliseconds);
     }
 
-    private static int FindUniqueLocations(string[] input)
+    private static int FindUniqueLocations(string[] input, bool isPartTwo = false)
     {
         HashSet<Coordinate> coordinates =  [];
         int maxY = input.Length;
@@ -37,29 +39,68 @@ public static class Day8
 
         foreach (var locations in antennas.Values)
         {
-            AddAntinodesForLocations(locations, coordinates, maxX, maxY);
+            AddAntinodesForLocations(locations, coordinates, maxX, maxY, isPartTwo);
         }
 
         return coordinates.Count;
     }
 
-    private static void AddAntinodesForLocations(List<Coordinate> locations, HashSet<Coordinate> coordinates, int maxX, int maxY)
+    private static void AddAntinodesForLocations(List<Coordinate> locations, HashSet<Coordinate> coordinates, int maxX, int maxY, bool isPartTwo = false)
     {
         for (int i = 0; i < locations.Count - 1; i++)
         {
             for (int j = i + 1; j < locations.Count; j++)
             {
-                (Coordinate before, Coordinate after) = locations[i].GetAntinodes(locations[j]);
-                if (IsWithinBounds(before, maxX, maxY))
+                if(isPartTwo)
                 {
-                    coordinates.Add(before);
+                    foreach(Coordinate antinode in FindAntinodes(locations[i], locations[j], maxX, maxY))
+                    {
+                        coordinates.Add(antinode);
+                    }
                 }
-                if (IsWithinBounds(after, maxX, maxY))
+                else
                 {
-                    coordinates.Add(after);
+                    (Coordinate before, Coordinate after) = locations[i].GetAntinodes(locations[j]);
+                    if (IsWithinBounds(before, maxX, maxY))
+                    {
+                        coordinates.Add(before);
+                    }
+                    if (IsWithinBounds(after, maxX, maxY))
+                    {
+                        coordinates.Add(after);
+                    }
                 }
             }
         }
+    }
+
+    private static List<Coordinate> FindAntinodes(Coordinate a, Coordinate b, int maxX, int maxY)
+    {
+        List<Coordinate> antinodes = new();
+        Coordinate antinodeA = a; 
+        Coordinate antinodeB = b; 
+
+        int dx = b.X - a.X;
+        int dy = b.Y - a.Y;
+
+        do
+        {
+            antinodes.Add(antinodeB);
+
+            antinodeB.X += dx;
+            antinodeB.Y += dy;
+
+        }while(IsWithinBounds(antinodeB, maxX, maxY));
+
+        do
+        {
+            antinodes.Add(antinodeA);
+
+            antinodeA.X -= dx;
+            antinodeA.Y -= dy;
+        }while(IsWithinBounds(antinodeA, maxX, maxY));
+
+        return antinodes;
     }
 
     private static bool IsWithinBounds(Coordinate coordinate, int maxX, int maxY)
