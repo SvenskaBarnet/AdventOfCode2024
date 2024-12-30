@@ -2,7 +2,6 @@
 {
     static void Main(string[] args)
     {
-        /*
         Day1.Part1();
         Day1.Part2();
         Day2.Part1();
@@ -19,7 +18,6 @@
         Day7.Part2();
         Day8.Part1();
         Day8.Part2();
-        */
         Day9.Part1();
         Day9.Part2();
     }
